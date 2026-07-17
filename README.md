@@ -6,10 +6,10 @@ A ready-to-use Podman image that bundles the Pi coding agent with essential deve
 
 ## Script (Recommended)
 
-Use `scripts/pi-podman` to manage the container lifecycle:
+Use `pi-podman` to manage the container lifecycle:
 
 ```bash
-./scripts/pi-podman
+./pi-podman
 ```
 
 The script handles everything automatically:
@@ -26,7 +26,7 @@ It mounts `$PWD` as `/workspace`. To pass API keys or other env vars, edit the s
 To use it from anywhere:
 
 ```bash
-sudo ln -s "$(pwd)/scripts/pi-podman" /usr/local/bin/pi
+sudo ln -s "$(pwd)/pi-podman" /usr/local/bin/pi
 ```
 
 Then just `pi` to start or resume your session.
@@ -46,7 +46,11 @@ podman run -it --name pi-podman \
   pi-podman
 ```
 
-The first volume mount uses `$(pwd)` to bind your current directory as the agent's workspace. Replace `$(pwd)` with the absolute path to any project directory you want the agent to work in. The second volume mount persists the agent's configuration across runs.
+The first volume mount uses `$(pwd)` to bind your current directory as the agent's workspace. Replace `$(pwd)` with the absolute path to any project directory you want the agent to work in. The second volume mount persists the agent's configuration across runs. Ensure the host directory exists before running (Podman would otherwise auto-create it as root-owned):
+
+```bash
+mkdir -p "$HOME/.config/pi.dev"
+```
 
 By giving the container a fixed name (`--name pi-podman`) and omitting `--rm`, you're building a persistent development environment. The first run creates the container; each subsequent `podman start -ai pi-podman` resumes that same container with everything you've installed still in place — tools, libraries, CLI helpers like `gh`, everything.
 
@@ -76,7 +80,7 @@ podman run --rm -it \
 
 ### Included Tools
 
-`bash`, `ca-certificates`, `curl`, `fd-find`, `git`, `gnupg`, `jq`, `libatomic1`, `make`, `openssh-client`, `procps`, `ripgrep`, `tree`, `unzip`, `wget`, `xz-utils`, `zip`
+`bash`, `ca-certificates`, `curl`, `fd-find`, `git`, `gnupg`, `jq`, `libatomic1`, `make`, `nano`, `neovim`, `openssh-client`, `procps`, `ripgrep`, `tree`, `unzip`, `vim`, `wget`, `xz-utils`, `zip`
 
 ### Installing Additional Tools
 

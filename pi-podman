@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 IMAGE="pi-podman:latest"
 CONTAINER="pi-podman"
 
 # Build image if not present
 if ! podman image exists "$IMAGE" 2>/dev/null; then
   echo "==> Building image $IMAGE..."
-  podman build -t "$IMAGE" -f ./Dockerfile.pi .
+  podman build -t "$IMAGE" -f "$SCRIPT_DIR/Dockerfile.pi" "$SCRIPT_DIR"
 fi
 
 # Run or start container
@@ -31,6 +32,6 @@ else
     -v "$HOME/.config/pi.dev:/root/.pi/agent:Z" \
     "$IMAGE"
 
-  # Pour passer des variables d'environnement, ajoutez-les juste au-dessus de "$IMAGE", par exemple :
+  # To pass environment variables, add -e lines just above "$IMAGE", for example:
   # -e ANTHROPIC_API_KEY \
 fi
