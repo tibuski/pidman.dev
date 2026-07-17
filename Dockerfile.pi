@@ -14,12 +14,16 @@ RUN apt-get update \
      make \
      openssh-client \
      procps \
+     fd-find \
      ripgrep \
      tree \
      unzip \
      wget \
      xz-utils \
      zip \
+     nano \
+     vim \
+     neovim \ 
   && rm -rf /var/lib/apt/lists/*
 
 ENV NODE_VERSION=26.5.0
