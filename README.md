@@ -46,5 +46,3 @@ The image is based on Debian Sid, so the agent can install missing development t
 ```bash
 apt-get update && apt-get install -y <package-name>
 ```
-
-## Image Contents
